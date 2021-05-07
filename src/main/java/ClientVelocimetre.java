@@ -6,17 +6,21 @@ import java.util.Scanner;
 
 public class ClientVelocimetre {
 
+    private MulticastSocket socket;
+    private InetAddress multicastIP;
+    private InetSocketAddress groupMulticast;
+    private NetworkInterface netIf;
 
-    public ClientVelocimetre() throws IOException {
+    public ClientVelocimetre(int port, String ip) throws IOException {
+        this.socket = new MulticastSocket(port);
+        this.multicastIP = InetAddress.getByName(ip);
+        this.groupMulticast = new InetSocketAddress(multicastIP,port);
+        this.netIf = NetworkInterface.getByName("wlp0s20f3");
     }
 
 
     public void RunClient() throws IOException {
 
-        MulticastSocket socket = new MulticastSocket(5557);
-        InetAddress multicastIP =   InetAddress.getByName("224.0.22.114");
-        InetSocketAddress groupMulticast = new InetSocketAddress(multicastIP,5557);;
-        NetworkInterface netIf = NetworkInterface.getByName("wlp0s20f3");;
         socket.joinGroup(groupMulticast, netIf);
         DatagramPacket packet;
 
@@ -54,7 +58,7 @@ public class ClientVelocimetre {
 
     public static void main(String[] args) {
         try{
-            ClientVelocimetre clientVelocimetre = new ClientVelocimetre();
+            ClientVelocimetre clientVelocimetre = new ClientVelocimetre(5557, "224.0.22.116");
             clientVelocimetre.RunClient();
         }catch (IOException e){
             System.out.println(e.getMessage());

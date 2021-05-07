@@ -41,7 +41,7 @@ public class ServerVelocitat {
     public static void main(String[] args) throws IOException {
         //Canvieu la X.X per un número per formar un IP.
         //Que no sigui la mateixa que la d'un altre company
-        ServerVelocitat srvVel = new ServerVelocitat(5557, "localhost");
+        ServerVelocitat srvVel = new ServerVelocitat(5557, "224.0.22.116");
         srvVel.runServer();
         System.out.println("Parat!");
 
